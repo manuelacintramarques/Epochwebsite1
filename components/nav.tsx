@@ -44,7 +44,7 @@ export default function Nav() {
           <Link
             href="/"
             className="text-white font-medium text-[18px] tracking-tight hover:opacity-80 transition-opacity"
-            style={{ fontFamily: "var(--font-geist-sans)" }}
+            style={{ fontFamily: "var(--font-hero)" }}
           >
             Epoch
           </Link>

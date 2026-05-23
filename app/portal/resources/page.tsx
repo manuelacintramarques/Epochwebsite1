@@ -170,7 +170,7 @@ export default function ResourcesPage() {
                   style={{
                     backgroundColor: "#7b61ff12",
                     color: "#c4bcff",
-                    fontFamily: "var(--font-geist-mono)",
+                    fontFamily: "var(--font-label)",
                   }}
                 >
                   W{resource.week}

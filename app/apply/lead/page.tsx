@@ -25,25 +25,41 @@ const COUNTRIES = [
   "Uzbekistan", "Venezuela", "Vietnam", "Zimbabwe",
 ];
 
+const ROLES = [
+  {
+    value: "curriculum_director",
+    title: "Curriculum Director",
+    desc: "Design and maintain the Foundations curriculum. Own the Notion workspace.",
+  },
+  {
+    value: "community_manager",
+    title: "Community Manager",
+    desc: "Own the Discord. Keep members engaged, run check-ins, manage show-your-work.",
+  },
+  {
+    value: "competitions_lead",
+    title: "Competitions Lead",
+    desc: "Source hackathons, track deadlines, help members find the right competitions.",
+  },
+  {
+    value: "growth_socials",
+    title: "Growth & Socials",
+    desc: "Run Epoch's public presence across Instagram, Twitter, and LinkedIn.",
+  },
+];
+
 function Field({
   label,
-  sublabel,
   error,
   children,
 }: {
   label: string;
-  sublabel?: string;
   error?: string;
   children: React.ReactNode;
 }) {
   return (
     <div>
-      <label className="block text-[12px] text-[#888] mb-1.5">
-        {label}
-        {sublabel && (
-          <span className="block text-[11px] text-[#555] mt-0.5">{sublabel}</span>
-        )}
-      </label>
+      <label className="block text-[12px] text-[#888] mb-1.5">{label}</label>
       {children}
       {error && <p className="text-[12px] text-[#e05555] mt-1">{error}</p>}
     </div>
@@ -60,17 +76,17 @@ const inputStyle = {
 const inputErrorClass =
   "w-full border border-[#e05555] rounded-lg px-3 py-2.5 text-white text-[14px] outline-none focus:border-[#e05555] transition-colors placeholder:text-[#333]";
 
-export default function ApplyPage() {
+export default function ApplyLeadPage() {
   const [form, setForm] = useState({
     name: "",
     email: "",
     country: "",
     age: "",
-    track: "" as "foundations" | "advanced" | "",
-    proofOfWork: "",
-    experience: "",
+    role: "",
     motivation: "",
+    experience: "",
     hours: "" as "2-3" | "4-6" | "7+" | "",
+    portfolio: "",
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
@@ -86,10 +102,9 @@ export default function ApplyPage() {
     else if (!/\S+@\S+\.\S+/.test(form.email)) errs.email = "Enter a valid email";
     if (!form.country) errs.country = "Required";
     if (!form.age) errs.age = "Required";
-    if (!form.track) errs.track = "Select a track";
-    if (form.track === "advanced" && !form.proofOfWork.trim()) errs.proofOfWork = "Required for Advanced track";
-    if (!form.experience.trim()) errs.experience = "Required";
+    if (!form.role) errs.role = "Select a role";
     if (!form.motivation.trim()) errs.motivation = "Required";
+    if (!form.experience.trim()) errs.experience = "Required";
     if (!form.hours) errs.hours = "Required";
     return errs;
   };
@@ -105,7 +120,7 @@ export default function ApplyPage() {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/apply", {
+      const res = await fetch("/api/apply/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -113,11 +128,11 @@ export default function ApplyPage() {
           email: form.email,
           country: form.country,
           age: parseInt(form.age),
-          track: form.track,
-          experience: form.experience,
+          role: form.role,
           motivation: form.motivation,
+          experience: form.experience,
           hours_per_week: form.hours,
-          proof_of_work: form.proofOfWork || null,
+          portfolio_link: form.portfolio || null,
         }),
       });
 
@@ -146,7 +161,7 @@ export default function ApplyPage() {
             Application received.
           </h1>
           <p className="text-[#888] text-[15px] leading-[1.7]">
-            We review every application within 5 days and reply to everyone.
+            We review every leadership application carefully and reply within 7 days.
             Check your inbox at <span className="text-white">{form.email}</span>.
           </p>
         </div>
@@ -164,7 +179,7 @@ export default function ApplyPage() {
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "radial-gradient(ellipse at 50% 0%, rgba(123,97,255,0.15) 0%, transparent 60%)",
+              "radial-gradient(ellipse at 50% 0%, rgba(123,97,255,0.12) 0%, transparent 60%)",
           }}
         />
         <div className="relative z-10 max-w-[1200px] mx-auto px-6">
@@ -175,7 +190,7 @@ export default function ApplyPage() {
             className="font-mono text-[11px] tracking-[0.1em] uppercase text-[#444] mb-6"
             style={{ fontFamily: "var(--font-label)" }}
           >
-            Apply — Cohort 1
+            Apply — Leadership
           </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
@@ -184,25 +199,22 @@ export default function ApplyPage() {
             className="text-white font-medium leading-tight mb-4"
             style={{ fontSize: "clamp(36px, 5.5vw, 64px)", letterSpacing: "-1px", fontFamily: "var(--font-hero)" }}
           >
-            Join Epoch.
-            <br />
-            It&apos;s free.
+            Help build Epoch.
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4, delay: 0.2 }}
-            className="text-[#555] text-[15px]"
+            className="text-[#555] text-[15px] max-w-[480px]"
           >
-            30 Foundations spots · 15 Advanced spots · Applications close August 31, 2026
+            Real roles, real responsibility. You get a formal title, work that goes on your university application, and the chance to shape what Epoch becomes.
           </motion.p>
         </div>
       </section>
 
       <section className="border-t border-[#1e1e1e]">
-        <div className="max-w-[1200px] mx-auto px-6 py-16 grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-16">
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-6 max-w-[560px]">
+        <div className="max-w-[760px] mx-auto px-6 py-16">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <Field label="Full name" error={errors.name}>
                 <input
@@ -255,85 +267,45 @@ export default function ApplyPage() {
               </Field>
             </div>
 
-            {/* Track selection */}
-            <Field label="Track" error={errors.track}>
+            {/* Role selection */}
+            <Field label="Which role are you applying for?" error={errors.role}>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-1">
-                {[
-                  {
-                    value: "foundations" as const,
-                    title: "Foundations",
-                    sub: "Open to everyone",
-                    accent: "#7b61ff",
-                  },
-                  {
-                    value: "advanced" as const,
-                    title: "Advanced",
-                    sub: "Requires proof of experience",
-                    accent: "#e05555",
-                  },
-                ].map((t) => (
+                {ROLES.map((r) => (
                   <button
-                    key={t.value}
+                    key={r.value}
                     type="button"
-                    onClick={() => setForm((f) => ({ ...f, track: t.value }))}
+                    onClick={() => setForm((f) => ({ ...f, role: r.value }))}
                     className={`p-4 rounded-lg border text-left transition-all ${
-                      form.track === t.value
+                      form.role === r.value
                         ? "border-[#7b61ff] bg-[#7b61ff0d]"
                         : "border-[#2a2a2a] hover:border-[#444]"
                     }`}
-                    style={form.track !== t.value ? inputStyle : undefined}
+                    style={form.role !== r.value ? inputStyle : undefined}
                   >
-                    <p className="text-white text-[14px] font-medium">{t.title}</p>
-                    <p className="text-[#555] text-[12px] mt-0.5">{t.sub}</p>
+                    <p className="text-white text-[14px] font-medium">{r.title}</p>
+                    <p className="text-[#555] text-[12px] mt-0.5 leading-[1.5]">{r.desc}</p>
                   </button>
                 ))}
               </div>
             </Field>
 
-            {/* Proof of work — only if Advanced */}
-            {form.track === "advanced" && (
-              <Field label="Link to a project, GitHub repo, or work sample" error={errors.proofOfWork}>
-                <input
-                  type="url"
-                  value={form.proofOfWork}
-                  onChange={set("proofOfWork")}
-                  placeholder="https://github.com/..."
-                  style={inputStyle}
-                  className={errors.proofOfWork ? inputErrorClass : inputClass}
-                />
-              </Field>
-            )}
+            <Field label="Why do you want this role? What makes you the right person?" error={errors.motivation}>
+              <textarea
+                value={form.motivation}
+                onChange={set("motivation")}
+                rows={5}
+                style={inputStyle}
+                className={`${errors.motivation ? inputErrorClass : inputClass} resize-none`}
+              />
+            </Field>
 
-            <Field
-              label={
-                form.track === "advanced"
-                  ? "What's your experience with Python or ML?"
-                  : "What's your experience with Python or ML?"
-              }
-              sublabel={
-                form.track !== "advanced"
-                  ? "Be honest. Beginners are welcome."
-                  : undefined
-              }
-              error={errors.experience}
-            >
+            <Field label="What's your background with AI, coding, or the area this role covers?" error={errors.experience}>
               <textarea
                 value={form.experience}
                 onChange={set("experience")}
                 rows={4}
-                placeholder="I've done a few tutorials..."
                 style={inputStyle}
                 className={`${errors.experience ? inputErrorClass : inputClass} resize-none`}
-              />
-            </Field>
-
-            <Field label="Why do you want to join Epoch?" error={errors.motivation}>
-              <textarea
-                value={form.motivation}
-                onChange={set("motivation")}
-                rows={4}
-                style={inputStyle}
-                className={`${errors.motivation ? inputErrorClass : inputClass} resize-none`}
               />
             </Field>
 
@@ -358,6 +330,17 @@ export default function ApplyPage() {
               </div>
             </Field>
 
+            <Field label="Portfolio, GitHub, or any relevant link (optional)">
+              <input
+                type="url"
+                value={form.portfolio}
+                onChange={set("portfolio")}
+                placeholder="https://"
+                style={inputStyle}
+                className={inputClass}
+              />
+            </Field>
+
             {errors.submit && (
               <p className="text-[13px] text-[#e05555]">{errors.submit}</p>
             )}
@@ -372,35 +355,6 @@ export default function ApplyPage() {
               {loading ? "Submitting..." : "Submit application"}
             </button>
           </form>
-
-          {/* What happens next */}
-          <div className="space-y-6">
-            <p className="text-[12px] font-medium tracking-[0.08em] uppercase text-[#444]" style={{ fontFamily: "var(--font-label)" }}>
-              What happens next
-            </p>
-            <div className="space-y-6">
-              {[
-                "We review your application within 5 days and email you either way.",
-                "If accepted, you get a Discord invite and portal login.",
-                "Cohort 1 starts September 14, 2026. You'll have everything you need on day one.",
-              ].map((step, i) => (
-                <div key={i} className="flex gap-4">
-                  <span className="text-[#333] font-mono text-[13px] shrink-0 pt-0.5" style={{ fontFamily: "var(--font-label)" }}>
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <p className="text-[#888] text-[14px] leading-[1.7]">{step}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="border-t border-[#1e1e1e] pt-6">
-              <p className="text-[#888] text-[14px] leading-[1.7]">
-                We reject very few people. If you&apos;re not ready for
-                Advanced, we&apos;ll redirect you to Foundations with specific
-                feedback. No one is turned away for lack of experience.
-              </p>
-            </div>
-          </div>
         </div>
       </section>
 

@@ -101,7 +101,7 @@ function WeekRow({
       </div>
       <span
         className="text-[#555] text-[11px] font-mono w-8 shrink-0"
-        style={{ fontFamily: "var(--font-geist-mono)" }}
+        style={{ fontFamily: "var(--font-label)" }}
       >
         W{weekNum}
       </span>
@@ -153,7 +153,7 @@ export default function ProgressPage() {
                     </p>
                     <p
                       className="text-[#333] text-[9px] font-mono"
-                      style={{ fontFamily: "var(--font-geist-mono)" }}
+                      style={{ fontFamily: "var(--font-label)" }}
                     >
                       {phase.weeks}
                     </p>
@@ -307,7 +307,7 @@ export default function ProgressPage() {
                   </div>
                   <span
                     className="text-[#555] text-[11px] font-mono w-8 shrink-0"
-                    style={{ fontFamily: "var(--font-geist-mono)" }}
+                    style={{ fontFamily: "var(--font-label)" }}
                   >
                     W{weekNum}
                   </span>

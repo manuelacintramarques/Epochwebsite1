@@ -5,16 +5,6 @@ import Nav from "@/components/nav";
 import Footer from "@/components/footer";
 import Link from "next/link";
 
-const stagger = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.08 } },
-};
-
-const wordFade = {
-  hidden: { opacity: 0, y: 16 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.35 } },
-};
-
 function SectionReveal({
   children,
   className,
@@ -36,14 +26,21 @@ function SectionReveal({
 }
 
 export default function HomePage() {
-  const heroWords = ["high", "school", "students", "building", "AI."];
-
   return (
     <div className="bg-[#080808] min-h-screen">
       <Nav />
 
       {/* ─── HERO ─────────────────────────────────────────────────── */}
       <section className="relative min-h-screen flex items-center overflow-hidden pt-14">
+        {/* Gradient */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse at 50% 0%, rgba(123,97,255,0.15) 0%, rgba(0,204,112,0.05) 50%, transparent 70%)",
+          }}
+        />
+
         {/* Watermark */}
         <span
           aria-hidden="true"
@@ -65,7 +62,7 @@ export default function HomePage() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.4, delay: 0.1 }}
               className="font-mono text-[11px] tracking-[0.1em] uppercase text-[#444] mb-6"
-              style={{ fontFamily: "var(--font-geist-mono)" }}
+              style={{ fontFamily: "var(--font-label)" }}
             >
               Epoch — Cohort 1 Open
             </motion.p>
@@ -77,29 +74,22 @@ export default function HomePage() {
               className="text-[#888] italic mb-3"
               style={{ fontSize: "clamp(18px, 2.5vw, 26px)" }}
             >
-              The global club for
+              The international club for high school students
             </motion.p>
 
-            <motion.div
-              variants={stagger}
-              initial="hidden"
-              animate="show"
-              className="flex flex-wrap gap-x-4 gap-y-0"
+            <motion.h1
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, delay: 0.25 }}
+              className="text-white font-medium leading-[0.95]"
+              style={{
+                fontSize: "clamp(56px, 7.5vw, 96px)",
+                letterSpacing: "-2px",
+                fontFamily: "var(--font-hero)",
+              }}
             >
-              {heroWords.map((word, i) => (
-                <motion.span
-                  key={i}
-                  variants={wordFade}
-                  className="text-white font-medium leading-[0.95] block"
-                  style={{
-                    fontSize: "clamp(56px, 7.5vw, 96px)",
-                    letterSpacing: "-2px",
-                  }}
-                >
-                  {word}
-                </motion.span>
-              ))}
-            </motion.div>
+              learning AI, building real projects, and competing globally.
+            </motion.h1>
 
             <motion.p
               initial={{ opacity: 0 }}
@@ -108,9 +98,8 @@ export default function HomePage() {
               className="text-[#888] mt-8 leading-[1.7]"
               style={{ fontSize: "15px", maxWidth: "400px" }}
             >
-              Epoch is where ambitious students learn, build real AI projects,
-              compete in international hackathons, and find a community that
-              actually pushes them.
+              Epoch is where ambitious high school students learn AI, build real
+              projects, and find the community that actually pushes them.
             </motion.p>
 
             <motion.div
@@ -121,7 +110,7 @@ export default function HomePage() {
             >
               <Link
                 href="/apply"
-                className="text-[14px] font-medium text-white bg-[#7b61ff] px-6 py-2.5 rounded-[6px] hover:bg-[#6a51ee] transition-colors"
+                className="text-[14px] font-medium text-black bg-white px-6 py-2.5 rounded-[6px] hover:bg-[#e0e0e0] transition-colors"
               >
                 Apply to Cohort 1
               </Link>
@@ -152,6 +141,7 @@ export default function HomePage() {
                   style={{
                     fontSize: "clamp(40px, 5vw, 64px)",
                     letterSpacing: "-1px",
+                    fontFamily: "var(--font-hero)",
                   }}
                 >
                   {stat.number}
@@ -173,13 +163,11 @@ export default function HomePage() {
                 fontSize: "clamp(28px, 4vw, 48px)",
                 letterSpacing: "-0.5px",
                 maxWidth: "720px",
+                fontFamily: "var(--font-hero)",
               }}
             >
               Tutorials are everywhere. Community, accountability, and real
               projects aren&apos;t.
-            </p>
-            <p className="text-[#555] text-[15px] mt-4">
-              That&apos;s the gap Epoch fills.
             </p>
           </SectionReveal>
         </div>
@@ -189,10 +177,10 @@ export default function HomePage() {
       <section className="border-t border-[#1e1e1e]">
         <div className="max-w-[1200px] mx-auto px-6 py-24">
           <SectionReveal className="mb-14">
-            <p className="font-mono text-[11px] tracking-[0.1em] uppercase text-[#444] mb-3" style={{ fontFamily: "var(--font-geist-mono)" }}>
+            <p className="font-mono text-[11px] tracking-[0.1em] uppercase text-[#444] mb-3" style={{ fontFamily: "var(--font-label)" }}>
               Tracks
             </p>
-            <p className="text-white font-medium" style={{ fontSize: "clamp(24px, 3vw, 36px)", letterSpacing: "-0.5px" }}>
+            <p className="text-white font-medium" style={{ fontSize: "clamp(24px, 3vw, 36px)", letterSpacing: "-0.5px", fontFamily: "var(--font-hero)" }}>
               Pick the track that fits where you are now.
             </p>
           </SectionReveal>
@@ -200,64 +188,44 @@ export default function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-[#1e1e1e]">
             {/* Foundations */}
             <SectionReveal className="pr-0 lg:pr-16 pb-12 lg:pb-0">
-              <p className="text-[11px] font-mono tracking-[0.1em] uppercase text-[#7b61ff] mb-6" style={{ fontFamily: "var(--font-geist-mono)" }}>
+              <p className="text-[11px] font-mono tracking-[0.1em] uppercase text-[#7b61ff] mb-6" style={{ fontFamily: "var(--font-label)" }}>
                 Foundations Track
               </p>
               <p
                 className="text-white font-medium leading-none mb-2"
-                style={{ fontSize: "clamp(56px, 7vw, 96px)", letterSpacing: "-2px" }}
+                style={{ fontSize: "clamp(56px, 7vw, 96px)", letterSpacing: "-2px", fontFamily: "var(--font-hero)" }}
               >
                 8
               </p>
               <p className="text-[#888] text-[15px] mb-6">weeks of structured curriculum</p>
-              <p className="text-[#888] text-[15px] leading-[1.7] mb-8 max-w-[420px]">
-                Python, ML, data science, AI applications. Weeks 1–4 are
-                core — weeks 5–8 you pick your focus. Everyone ships a project
-                at the end.
+              <p className="text-[#888] text-[15px] leading-[1.7] max-w-[420px]">
+                Start from zero or build on what you know. Weeks 1–4 cover
+                Python, data cleaning, and your first ML model — the core skills
+                every track builds on. In weeks 5–8 you choose a focus: ML &
+                Modelling, Data Science, or AI Applications. The cohort ends
+                with a real project you&apos;ve shipped.
               </p>
-              <ul className="space-y-2">
-                {[
-                  "Structured weekly modules on Notion",
-                  "First Kaggle competition entry",
-                  "Cohort showcase project",
-                ].map((item) => (
-                  <li key={item} className="text-[#666] text-[14px]">
-                    <span className="text-[#333] mr-3">&mdash;</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
             </SectionReveal>
 
             {/* Advanced */}
             <SectionReveal className="pl-0 lg:pl-16 pt-12 lg:pt-0">
-              <p className="text-[11px] font-mono tracking-[0.1em] uppercase text-[#e05555] mb-6" style={{ fontFamily: "var(--font-geist-mono)" }}>
+              <p className="text-[11px] font-mono tracking-[0.1em] uppercase text-[#e05555] mb-6" style={{ fontFamily: "var(--font-label)" }}>
                 Advanced Track
               </p>
               <p
                 className="text-white font-medium leading-none mb-2"
-                style={{ fontSize: "clamp(56px, 7vw, 96px)", letterSpacing: "-2px" }}
+                style={{ fontSize: "clamp(56px, 7vw, 96px)", letterSpacing: "-2px", fontFamily: "var(--font-hero)" }}
               >
                 1
               </p>
               <p className="text-[#888] text-[15px] mb-6">project. shipped. real.</p>
-              <p className="text-[#888] text-[15px] leading-[1.7] mb-8 max-w-[420px]">
-                Self-directed. You define the project, pick the competition, and
-                build for 8 weeks. The club provides accountability, peers, and
-                resources.
+              <p className="text-[#888] text-[15px] leading-[1.7] max-w-[420px]">
+                You&apos;ve already built things. Now build something that
+                matters. Eight weeks of focused, self-directed work — you define
+                the goal, pick the competition, and own the output. The club
+                gives you structure, accountability, and people who are doing the
+                same.
               </p>
-              <ul className="space-y-2">
-                {[
-                  "Deployed app anyone can use",
-                  "Real competition entry",
-                  "Published writeup",
-                ].map((item) => (
-                  <li key={item} className="text-[#666] text-[14px]">
-                    <span className="text-[#333] mr-3">&mdash;</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
             </SectionReveal>
           </div>
         </div>
@@ -267,7 +235,7 @@ export default function HomePage() {
       <section className="border-t border-[#1e1e1e]">
         <div className="max-w-[1200px] mx-auto px-6 py-24">
           <SectionReveal className="mb-16">
-            <p className="font-mono text-[11px] tracking-[0.1em] uppercase text-[#444] mb-3" style={{ fontFamily: "var(--font-geist-mono)" }}>
+            <p className="font-mono text-[11px] tracking-[0.1em] uppercase text-[#444] mb-3" style={{ fontFamily: "var(--font-label)" }}>
               How it works
             </p>
           </SectionReveal>
@@ -281,12 +249,12 @@ export default function HomePage() {
                 {
                   num: "01",
                   title: "Apply",
-                  desc: "A short form. We're looking for curiosity and commitment, not experience. Beginners are welcome.",
+                  desc: "A short form. We're looking for curiosity and commitment, not experience. Beginners are welcome in Foundations.",
                 },
                 {
                   num: "02",
                   title: "Join your track",
-                  desc: "Pick Foundations or Advanced. Join the Discord. Start Week 1 at your own pace.",
+                  desc: "Foundations or Advanced. Join the Discord, meet your cohort, and get access to the Notion workspace.",
                 },
                 {
                   num: "03",
@@ -296,14 +264,14 @@ export default function HomePage() {
                 {
                   num: "04",
                   title: "Ship & showcase",
-                  desc: "Present your project at the Cohort Showcase. Receive your certificate. Optionally become a mentor for the next cohort.",
+                  desc: "Every member ships something real. Present at the Cohort Showcase, earn your certificate, and optionally mentor the next cohort.",
                 },
               ].map((step) => (
                 <SectionReveal key={step.num} className="flex gap-8 pl-12 relative">
                   <div className="absolute left-0 top-1 w-11 h-11 rounded-full bg-[#0f0f0f] border border-[#1e1e1e] flex items-center justify-center shrink-0">
                     <span
                       className="text-[#444] text-[11px] font-medium"
-                      style={{ fontFamily: "var(--font-geist-mono)" }}
+                      style={{ fontFamily: "var(--font-label)" }}
                     >
                       {step.num}
                     </span>
@@ -332,12 +300,13 @@ export default function HomePage() {
               style={{
                 fontSize: "clamp(40px, 6vw, 72px)",
                 letterSpacing: "-1.5px",
+                fontFamily: "var(--font-hero)",
               }}
             >
               Cohort 1 is open.
             </p>
             <p className="text-[#555] text-[16px] mb-8">
-              25 Foundations spots. 10 Advanced spots.
+              30 Foundations spots. 15 Advanced spots.
             </p>
             <Link
               href="/apply"

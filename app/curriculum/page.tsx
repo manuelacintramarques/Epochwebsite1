@@ -36,7 +36,7 @@ export default function CurriculumPage() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4 }}
           className="font-mono text-[11px] tracking-[0.1em] uppercase text-[#444] mb-6"
-          style={{ fontFamily: "var(--font-geist-mono)" }}
+          style={{ fontFamily: "var(--font-label)" }}
         >
           Curriculum
         </motion.p>
@@ -48,13 +48,14 @@ export default function CurriculumPage() {
           style={{
             fontSize: "clamp(36px, 5.5vw, 64px)",
             letterSpacing: "-1px",
+            fontFamily: "var(--font-hero)",
           }}
         >
           Two tracks.
           <br />
           Eight weeks.
           <br />
-          One shipped project.
+          Real projects, real competitions, real growth.
         </motion.h1>
       </section>
 
@@ -64,7 +65,7 @@ export default function CurriculumPage() {
           <SectionReveal className="mb-10">
             <p
               className="font-mono text-[11px] tracking-[0.1em] uppercase text-[#7b61ff] mb-4"
-              style={{ fontFamily: "var(--font-geist-mono)" }}
+              style={{ fontFamily: "var(--font-label)" }}
             >
               Foundations Track
             </p>
@@ -84,22 +85,22 @@ export default function CurriculumPage() {
                 {
                   num: "01",
                   title: "Python for Data",
-                  desc: "NumPy, Pandas, real datasets. Load, inspect, filter, describe.",
+                  desc: "NumPy, Pandas, real datasets. Load, inspect, filter, describe. Why: everything in ML is data manipulation first.",
                 },
                 {
                   num: "02",
                   title: "Data Cleaning & Visualization",
-                  desc: "Handle missing values, fix types, Matplotlib, Seaborn, correlation.",
+                  desc: "Handle missing values, fix types, Matplotlib, Seaborn, correlation. Why: clean data is the hardest part of any real project.",
                 },
                 {
                   num: "03",
                   title: "Your First ML Model",
-                  desc: "scikit-learn, train/test split, confusion matrix, accuracy.",
+                  desc: "scikit-learn, train/test split, confusion matrix, accuracy. Why: the first model you ship matters more than a perfect one you never finish.",
                 },
                 {
                   num: "04",
                   title: "Feature Engineering & Kaggle",
-                  desc: "First real Kaggle submission. Score doesn't matter — shipping does.",
+                  desc: "First real Kaggle submission. Score doesn't matter — shipping does. Why: competing teaches you things tutorials don't.",
                 },
               ].map((week, i) => (
                 <div
@@ -114,7 +115,7 @@ export default function CurriculumPage() {
                   >
                     <span
                       className="text-[#333] text-[13px] font-mono"
-                      style={{ fontFamily: "var(--font-geist-mono)" }}
+                      style={{ fontFamily: "var(--font-label)" }}
                     >
                       {week.num}
                     </span>
@@ -210,13 +211,14 @@ export default function CurriculumPage() {
           <SectionReveal className="mb-10">
             <p
               className="font-mono text-[11px] tracking-[0.1em] uppercase text-[#e05555] mb-4"
-              style={{ fontFamily: "var(--font-geist-mono)" }}
+              style={{ fontFamily: "var(--font-label)" }}
             >
               Advanced Track
             </p>
             <p className="text-[#888] text-[15px] leading-[1.7] max-w-[600px]">
               Self-directed. You set the goal, the project, the competition. The
-              club provides structure and accountability.
+              club provides structure, accountability, and peers who are doing
+              the same.
             </p>
           </SectionReveal>
 
@@ -232,7 +234,7 @@ export default function CurriculumPage() {
                 <div key={phase.phase} className="p-5 bg-[#0d0d0d]">
                   <p
                     className="font-mono text-[10px] tracking-[0.1em] uppercase text-[#444] mb-2"
-                    style={{ fontFamily: "var(--font-geist-mono)" }}
+                    style={{ fontFamily: "var(--font-label)" }}
                   >
                     {phase.weeks}
                   </p>
@@ -253,24 +255,24 @@ export default function CurriculumPage() {
                 {
                   num: "01",
                   title: "One deployed project",
-                  desc: "A real product, live on the internet, that anyone can use. Not a notebook.",
+                  desc: "A real product, live on the internet, that anyone can use. Not a notebook. Not a demo — something deployed.",
                 },
                 {
                   num: "02",
                   title: "One competition entry",
-                  desc: "At least one Kaggle, Devpost, or equivalent competition submitted before week 6.",
+                  desc: "At least one Kaggle, Devpost, or equivalent competition submitted before week 6. The score doesn't matter. The entry does.",
                 },
                 {
                   num: "03",
                   title: "One published writeup",
-                  desc: "What you built, why, what results you got, what you learned. Posted publicly.",
+                  desc: "What you built, why, what results you got, what you learned. Posted publicly. This is your record.",
                 },
               ].map((output) => (
                 <div key={output.num} className="flex gap-6 items-start">
                   <span
                     className="text-[#222] font-mono text-[32px] font-medium leading-none shrink-0 pt-1"
                     style={{
-                      fontFamily: "var(--font-geist-mono)",
+                      fontFamily: "var(--font-label)",
                       WebkitTextStroke: "1px #333",
                     }}
                   >

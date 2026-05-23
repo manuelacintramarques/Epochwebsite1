@@ -24,8 +24,9 @@ const config: Config = {
         "accent-red": "#e05555",
       },
       fontFamily: {
-        sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
-        mono: ["var(--font-geist-mono)", "monospace"],
+        sans: ["var(--font-body)", "system-ui", "sans-serif"],
+        mono: ["var(--font-label)", "monospace"],
+        hero: ["var(--font-hero)", "sans-serif"],
       },
       fontSize: {
         "hero": ["96px", { lineHeight: "0.95", letterSpacing: "-2px", fontWeight: "500" }],
